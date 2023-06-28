@@ -350,7 +350,7 @@ pub fn annotate_snippet(
 Nicely done!
 
 Next, we just have to repeat this process for the `title`, `footer`, and `slices` parameters.
-The details are a little bit uninteresting, but the rest of the code is available here (TODO).
+The details are a little bit tedious, but I've provided the rest of the code here (TODO).
 
 When you're finished, you can run `npm run build` to check that it compiles to WebAssembly successfully.
 
