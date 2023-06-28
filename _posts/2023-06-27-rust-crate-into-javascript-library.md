@@ -149,7 +149,7 @@ import { add } from "../pkg";
 console.log(add(3, 5));
 ```
 
-### Trying it all together
+### Tying it all together
 
 First, you'll want to build the Rust project by running `cargo build`.
 Then, install all of the npm dependencies (including TypeScript and [wasm-pack](https://rustwasm.github.io/wasm-pack/)) by running `npm install`.
@@ -224,10 +224,7 @@ pub fn annotate_snippet(
 Let's start with `options`, which we expect to be provided as a plain JavaScript object with fields that match `annotate_snippets::FormatOptions`.
 We will begin by creating our own structs that match the structure of `FormatOptions` that implement the serde `Serialize` and `Deserialize` traits on them.
 `serde` is a library that lets you automatically perform conversions between Rust structs and serialized formats.
-
-We need these structs to be our own because Rust does not allow you to implement foreign traits on foreign types[^impl_foreign_traits].
-
-[^impl_foreign_traits]: https://rust-lang.github.io/chalk/book/clauses/coherence.html
+We need these structs to be our own because Rust [does not allow you to implement foreign traits on foreign types](https://rust-lang.github.io/chalk/book/clauses/coherence.html).
 
 Here are the structs we have added:
 
