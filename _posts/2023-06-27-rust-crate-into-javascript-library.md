@@ -70,7 +70,7 @@ This defines our JavaScript package information:
 }
 ```
 
-Note that we're actually making a TypeScript library. This is just a JavaScript library with extra type information so users can have documentation and type checking in their IDEs.
+Note that we're actually making a TypeScript library -- a JavaScript library with extra type information so that anyone using our library can have extra documentation and type checking in their IDEs.
 
 ### `tsconfig.json`
 
@@ -316,7 +316,7 @@ pub fn annotate_snippet(
 
 This is great, but if there is a parsing error, it would be nice to give more specific information to the user.
 
-Let's define an external function that will let our Rust code call back into JavaScript and throw an error:
+Let's define an external function that will let our Rust code call back into JavaScript and throw an error...
 
 ```rust
 #[wasm_bindgen(inline_js = "exports.error = function(s) { throw new Error(s) }")]
