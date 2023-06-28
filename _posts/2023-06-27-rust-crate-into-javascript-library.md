@@ -210,6 +210,8 @@ To expose the API through WebAssembly, I'll write a function named `annotate_sni
 To model these options, we can use an opague type called `JsValue`, and do some parsing to check the values have the expected structure.
 
 ```rust
+use wasm_bindgen::prelude::*;
+
 #[wasm_bindgen]
 pub fn annotate_snippet(
     title: JsValue,
@@ -226,7 +228,7 @@ We will begin by creating our own structs that match the structure of `FormatOpt
 `serde` is a library that lets you automatically perform conversions between Rust structs and serialized formats.
 We need these structs to be our own because Rust [does not allow you to implement foreign traits on foreign types](https://rust-lang.github.io/chalk/book/clauses/coherence.html).
 
-Here are the structs we have added:
+Here are the structs I added:
 
 ```rust
 use serde::{Deserialize, Serialize};
@@ -263,6 +265,8 @@ Next, we need to write some glue code for converting these structs back into the
 The idiomatic way to achieve this in Rust by using the `From` trait:
 
 ```rust
+use annotate_snippets::display_list::{FormatOptions, Margin};
+
 impl From<MyFormatOptions> for FormatOptions {
     fn from(options: MyFormatOptions) -> Self {
         FormatOptions {
