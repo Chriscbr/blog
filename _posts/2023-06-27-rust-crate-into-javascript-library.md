@@ -109,7 +109,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 wasm-bindgen = "0.2.87"
-annotate-snippets = "0.9.1"
+annotate-snippets = { version = "0.9.1", features = ["color"] }
 serde = { version = "1.0", features = ["derive"] }
 serde-wasm-bindgen = "0.4"
 ```
@@ -207,7 +207,7 @@ println!("{}", dl);
 
 To expose the API through WebAssembly, I'll write a function named `annotate_snippet` that expects the options of the `Snippet` as parameters (title, footer, slices, and formattiong options), and which returns a `String`.
 
-To model these options, we can use an opague type called `JsValue`, and later do some parsing to check the values have the expected structure.
+To model these options, we can use an opague type called `JsValue`, and do some parsing to check the values have the expected structure.
 
 ```rust
 #[wasm_bindgen]
@@ -221,7 +221,137 @@ pub fn annotate_snippet(
 }
 ```
 
+Let's start with `options`, which we expect to be provided as a plain JavaScript object with fields that match `annotate_snippets::FormatOptions`.
+We will begin by creating our own structs that match the structure of `FormatOptions` that implement the serde `Serialize` and `Deserialize` traits on them.
+`serde` is a library that lets you automatically perform conversions between Rust structs and serialized formats.
 
+We need these structs to be our own because Rust does not allow you to implement foreign traits on foreign types[^impl_foreign_traits].
+
+[^impl_foreign_traits]: https://rust-lang.github.io/chalk/book/clauses/coherence.html
+
+Here are the structs we have added:
+
+```rust
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+struct MyFormatOptions {
+    color: bool,
+    #[serde(rename = "anonymizedLineNumbers")]
+    anonymized_line_numbers: bool,
+    margin: Option<MyMargin>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct MyMargin {
+    #[serde(rename = "whitespaceLeft")]
+    whitespace_left: usize,
+    #[serde(rename = "spanLeft")]
+    span_left: usize,
+    #[serde(rename = "spanRight")]
+    span_right: usize,
+    #[serde(rename = "labelRight")]
+    label_right: usize,
+    #[serde(rename = "columnWidth")]
+    column_width: usize,
+    #[serde(rename = "maxLineLen")]
+    max_line_len: usize,
+}
+```
+
+For some fields, I've added a macro that renames the field.
+The purpose is so that in our TypeScript library, we can use camelCase fields as is the convention in the TypeScript ecosystem, while still representing the fields in Rust using snake_case.
+
+Next, we need to write some glue code for converting these structs back into the corresponding types from the `annotate-snippets` crate.
+The idiomatic way to achieve this in Rust by using the `From` trait:
+
+```rust
+impl From<MyFormatOptions> for FormatOptions {
+    fn from(options: MyFormatOptions) -> Self {
+        FormatOptions {
+            color: options.color,
+            anonymized_line_numbers: options.anonymized_line_numbers,
+            margin: options.margin.map(|m| m.into()),
+        }
+    }
+}
+
+impl From<MyMargin> for Margin {
+    fn from(margin: MyMargin) -> Self {
+        Margin::new(
+            margin.whitespace_left,
+            margin.span_left,
+            margin.span_right,
+            margin.label_right,
+            margin.column_width,
+            margin.max_line_len,
+        )
+    }
+}
+```
+
+Finally we can use these structs in our `annotate_snippet` function to parse the `JsValue`:
+
+```rust
+#[wasm_bindgen]
+pub fn annotate_snippet(
+    title: JsValue,
+    footer: JsValue,
+    slices: JsValue,
+    options: JsValue,
+) -> String {
+    let options: FormatOptions = match serde_wasm_bindgen::from_value::<MyFormatOptions>(options) {
+        Ok(config) => config.into(),
+        Err(_) => {
+            return String::from("Error");
+        }
+    };
+
+    todo!()
+}
+```
+
+### Error handling
+
+This is great, but if there is a parsing error, it would be nice to give more specific information to the user.
+
+Let's define an external function that will let our Rust code call back into JavaScript and throw an error:
+
+```rust
+#[wasm_bindgen(inline_js = "exports.error = function(s) { throw new Error(s) }")]
+extern "C" {
+    fn error(s: String);
+}
+```
+
+...and update the code from `annotate_snippet` so we use the `Err` value:
+
+```rust
+#[wasm_bindgen]
+pub fn annotate_snippet(
+    title: JsValue,
+    footer: JsValue,
+    slices: JsValue,
+    options: JsValue,
+) -> String {
+    let options: FormatOptions = match serde_wasm_bindgen::from_value::<MyFormatOptions>(options) {
+        Ok(config) => config.into(),
+        Err(err) => {
+            error(err.to_string());
+            return String::from("Error");
+        }
+    };
+
+    todo!()
+}
+```
+
+Nicely done!
+
+Next, we just have to repeat this process for the `title`, `footer`, and `slices` parameters.
+The details are a little bit uninteresting, but the rest of the code is available here (TODO).
+
+When you're finished, you can run `npm run build` to check that it compiles to WebAssembly successfully.
 
 ## Wrapping the WebAssembly bindings in TypeScript
 
@@ -229,4 +359,4 @@ TODO
 
 ## Conclusion
 
-That's all, folks!
+TODO
