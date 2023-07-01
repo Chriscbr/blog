@@ -6,19 +6,92 @@ Hi there - my name's Chris.
 I'm an avid software engineer that enjoys building things.
 
 In this post, I'll walk through how I created an [npm] package that re-exports the APIs of a Rust crate for use in JavaScript in a little over an hour.
-For demonstration I'll use a crate named [annotate-snippets], which provides an API for pretty-printing error diagnostics like the one shown below - though the technique can be applied to any crate.
+For demonstration I'll use a Apache-2.0 / MIT licensed crate named [annotate-snippets], which provides an API for pretty-printing error diagnostics like the one shown below - though the technique can be applied to any crate.
+
+Here's an example the final library being used, and the formatted diagnostic it prints out:
+
+```ts
+import { annotateSnippet } from "annotate-snippets";
+
+console.log(annotateSnippet({
+  label: "mismatched types",
+  id: "E0308",
+  annotationType: "error",
+}, [], [{
+  source: `) -> Option<String> {
+    for ann in annotations {
+        match (ann.range.0, ann.range.1) {
+            (None, None) => continue,
+            (Some(start), Some(end)) if start > end_index => continue,
+            (Some(start), Some(end)) if start >= start_index => {
+                let label = if let Some(ref label) = ann.label {
+                    format!(" {}", label)
+                } else {
+                    String::from("")
+                };
+
+                return Some(format!(
+                    "{}{}{}",
+                    " ".repeat(start - start_index),
+                    "^".repeat(end - start),
+                    label
+                ));
+            }
+            _ => continue,
+        }
+    }`,
+  lineStart: 51,
+  origin: "src/format.rs",
+  fold: false,
+  annotations: [
+    {
+      label: "expected `Option<String>` because of return type",
+      annotationType: "warning",
+      range: [5, 19],
+    },
+    {
+      label: "expected enum `std::option::Option`",
+      annotationType: "error",
+      range: [26, 724],
+    }
+  ]
+}], {
+  color: true,
+  anonymizedLineNumbers: false,
+}));
+```
 
 _Example diagnostic:_
 
 ```
 error[E0308]: mismatched types
-  --> src/multislice.rs:13:22
+  --> src/format.rs:51:6
    |
-13 |         slices: vec!["A",
-   |                      ^^^ expected struct `annotate_snippets::snippet::Slice`, found reference
-   |
-   = note: expected type: `snippet::Annotation`
-              found type: `&snippet::Annotation`
+51 |   ) -> Option<String> {
+   |        -------------- expected `Option<String>` because of return type
+52 |       for ann in annotations {
+   |  _____^
+53 | |         match (ann.range.0, ann.range.1) {
+54 | |             (None, None) => continue,
+55 | |             (Some(start), Some(end)) if start > end_index => continue,
+56 | |             (Some(start), Some(end)) if start >= start_index => {
+57 | |                 let label = if let Some(ref label) = ann.label {
+58 | |                     format!(" {}", label)
+59 | |                 } else {
+60 | |                     String::from("")
+61 | |                 };
+62 | |
+63 | |                 return Some(format!(
+64 | |                     "{}{}{}",
+65 | |                     " ".repeat(start - start_index),
+66 | |                     "^".repeat(end - start),
+67 | |                     label
+68 | |                 ));
+69 | |             }
+70 | |             _ => continue,
+71 | |         }
+72 | |     }
+   | |____^ expected enum `std::option::Option`
 ```
 
 [npm]: https://www.npmjs.com/
@@ -40,7 +113,7 @@ Next, create a new directory and add the following files:
 
 ### `package.json`
 
-This defines our JavaScript package information:
+This defines our JavaScript package metadata:
 
 ```json
 {
@@ -51,9 +124,12 @@ This defines our JavaScript package information:
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "*.js",
-    "*.d.ts",
-    "*.wasm"
+    "lib/**/*.js",
+    "lib/**/*.d.ts",
+    "pkg/**/*.js",
+    "pkg/**/*.d.ts",
+    "pkg/**/*.wasm",
+    "pkg/**/*.wasm.d.ts"
   ],
   "keywords": [],
   "license": "MIT",
@@ -89,7 +165,7 @@ This defines our TypeScript configuration:
 }
 ```
 
-For this post I'll be compiling to "CommonJS" (a standard for how JavaScript code can be packaged into modules), although it should be noted that [ES modules] is a more recent standard that works across more JavaScript runtimes.
+For this post I'll be compiling to "CommonJS" (a standard for packaging JavaScript modules that was designed for NodeJS), although it should be noted that [ES modules] is a more recent standard that works across more JavaScript runtimes.
 
 [ES modules]: https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/
 
@@ -114,6 +190,8 @@ serde = { version = "1.0", features = ["derive"] }
 serde-wasm-bindgen = "0.4"
 ```
 
+If you wanted to create bindings for a different Rust crate, you could easily swap `annotate-snippets` with 
+
 ### `.gitignore`
 
 So we don't commit unnecessary stuff to git.
@@ -128,7 +206,7 @@ So we don't commit unnecessary stuff to git.
 
 ### `src/lib.rs`
 
-The entrypoint of our Rust project, initialized with a stub function that's exported to WebAssembly:
+The entrypoint of our Rust project, initialized with a placeholder function that is exported to WebAssembly:
 
 ```rust
 use wasm_bindgen::prelude::*;
@@ -141,7 +219,7 @@ pub fn add(x: usize, y: usize) -> usize {
 
 ### `lib/index.ts`
 
-The entrypoint of our TypeScript library, that uses the stubbed function.
+The entrypoint of our TypeScript library, that uses the placeholder function.
 
 ```ts
 import { add } from "../pkg";
@@ -168,7 +246,7 @@ A full list of supported types are described [here].
 
 [here]: https://rustwasm.github.io/wasm-bindgen/reference/types.html
 
-The crate I'm using, `annotate-snippets`, has a simple API that expects a set of options for specifying a code snippet and the errors it should be annotated with, and it can produce a Rust `String` as output. Here's what it would look like to print a snippet in plain Rust:
+The crate I'm using, `annotate-snippets`, has a simple API that expects a set of options for specifying a code snippet and the errors it should be annotated with, and it can produce a Rust `String` as output. Here's what the API of `annotate-snippets` looks like in Rust:
 
 ```rust
 let snippet = Snippet {
@@ -223,10 +301,11 @@ pub fn annotate_snippet(
 }
 ```
 
-Let's start with `options`, which we expect to be provided as a plain JavaScript object with fields that match `annotate_snippets::FormatOptions`.
-We will begin by creating our own structs that match the structure of `FormatOptions` that implement the serde `Serialize` and `Deserialize` traits on them.
+Let's start with parsing the first parameter, `options`, which we expect to be provided as a plain JavaScript object with fields that match `annotate_snippets::FormatOptions`.
+The way we will achieve this is by creating own structs that match the structure of `FormatOptions` that implement the serde `Serialize` and `Deserialize` traits on them.
 `serde` is a library that lets you automatically perform conversions between Rust structs and serialized formats.
-We need these structs to be our own because Rust [does not allow you to implement foreign traits on foreign types](https://rust-lang.github.io/chalk/book/clauses/coherence.html).
+
+> Note: We need to create our own structs because Rust [does not allow you to implement foreign traits on foreign types](https://rust-lang.github.io/chalk/book/clauses/coherence.html).
 
 Here are the structs I added:
 
@@ -350,14 +429,128 @@ pub fn annotate_snippet(
 Nicely done!
 
 Next, we just have to repeat this process for the `title`, `footer`, and `slices` parameters.
-The details are a little bit tedious, but I've provided the rest of the code here (TODO).
+The details are a little bit tedious, but the rest of the code is available on GitHub [here](https://github.com/Chriscbr/annotate-snippets/blob/main/src/lib.rs).
 
 When you're finished, you can run `npm run build` to check that it compiles to WebAssembly successfully.
 
 ## Wrapping the WebAssembly bindings in TypeScript
 
-TODO
+At this point, the JavaScript bindings are fully functional.
+Here's an example of calling them in `lib/index.ts`:
+
+```ts
+import { annotate_snippet } from "../pkg";
+
+console.log(annotate_snippet({
+  label: "mismatched types",
+  id: "E0308",
+  annotationType: "error",
+}, [], [{
+  source: `) -> Option<String> {
+    for ann in annotations {
+        match (ann.range.0, ann.range.1) {
+            (None, None) => continue,
+            (Some(start), Some(end)) if start > end_index => continue,
+            (Some(start), Some(end)) if start >= start_index => {
+                let label = if let Some(ref label) = ann.label {
+                    format!(" {}", label)
+                } else {
+                    String::from("")
+                };
+
+                return Some(format!(
+                    "{}{}{}",
+                    " ".repeat(start - start_index),
+                    "^".repeat(end - start),
+                    label
+                ));
+            }
+            _ => continue,
+        }
+    }`,
+  lineStart: 51,
+  origin: "src/format.rs",
+  fold: false,
+  annotations: [
+    {
+      label: "expected `Option<String>` because of return type",
+      annotationType: "warning",
+      range: [5, 19],
+    },
+    {
+      label: "expected enum `std::option::Option`",
+      annotationType: "error",
+      range: [26, 724],
+    }
+  ]
+}], {
+  color: true,
+  anonymizedLineNumbers: false,
+}));
+```
+
+The only problem is that by default, all of these fields will be typed as `any` in TypeScript. This means anyone calling the API won't know what fields can be passed in, unless they go to the Rust documentation for the original crate or look at our source code.
+
+We can do better by providing a typed API that shows all of the available fields for each parameter of the `annotate_snippet` function.
+
+Here's our updated TypeScript module in `lib/index.ts`.
+All of the types are TypeScript equivalents of the types
+from our Rust code (for example, `bool` becomes `boolean`, `Option<String>` becomes optional `string`'s, and simple enums become [string literal types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types)).
+
+```ts
+export type AnnotationType = "error" | "warning" | "info" | "note" | "help";
+
+export interface Annotation {
+  id?: string;
+  label?: string;
+  annotationType: AnnotationType;
+}
+
+export interface Slice {
+  source: string;
+  lineStart: number;
+  origin?: string;
+  annotations: SourceAnnotation[];
+  fold: boolean;
+}
+
+export interface SourceAnnotation {
+  range: [number, number];
+  label: string;
+  annotationType: AnnotationType;
+}
+
+export interface FormatOptions {
+  color: boolean;
+  anonymizedLineNumbers: boolean;
+  margin?: Margin;
+}
+
+export interface Margin {
+  whitespaceLeft: number;
+  spanLeft: number;
+  spanRight: number;
+  labelRight: number;
+  columnWidth: number;
+  maxLineLen: number;
+}
+
+export function annotate_snippet(
+  title: Annotation | undefined,
+  footer: Annotation[],
+  slices: Slice[],
+  options: FormatOptions,
+) {
+  return bindings.annotate_snippet(title, footer, slices, options);
+}
+```
+
+Run `npm run build` again to check everything works.
 
 ## Conclusion
 
-TODO
+That's it! We've successfully wrapped a Rust crate in WebAssembly and TypeScript.
+
+You can see the full source code of the library on GitHub here (https://github.com/Chriscbr/annotate-snippets).
+
+If you have any questions or comments, feel free to reach out to me on [Twitter](https://twitter.com/rybickic) or [GitHub](https://github.com/Chriscbr).
