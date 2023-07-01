@@ -1,5 +1,5 @@
 ---
-title: How to turn a Rust crate into a JavaScript library
+title: Using WebAssembly to turn Rust crates into fast JavaScript libraries
 ---
 
 Hi there - my name's Chris.
