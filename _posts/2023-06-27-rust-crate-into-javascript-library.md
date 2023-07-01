@@ -61,7 +61,9 @@ console.log(annotateSnippet({
 }));
 ```
 
-_Example diagnostic:_
+(This API isn't beautiful, but it gets the job done.)
+
+And here's the diagnostic it prints out:
 
 ```
 error[E0308]: mismatched types
