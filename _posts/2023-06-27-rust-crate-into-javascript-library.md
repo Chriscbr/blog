@@ -5,7 +5,7 @@ title: How to turn a Rust crate into a JavaScript library
 Hi there - my name's Chris.
 I'm an avid software engineer that enjoys building things.
 
-In this post, I'll walk through how I created an [npm] package that re-exports the APIs of a Rust crate for use in JavaScript in a little over an hour.
+In this post, I'll walk through how you can create an [npm] package that re-exports the APIs of a Rust crate for use in JavaScript.
 For demonstration I'll use a Apache-2.0 / MIT licensed crate named [annotate-snippets], which provides an API for pretty-printing error diagnostics like the one shown below - though the technique can be applied to any crate.
 
 Here's an example the final library being used, and the formatted diagnostic it prints out:
@@ -233,20 +233,22 @@ First, you'll want to build the Rust project by running `cargo build`.
 Then, install all of the npm dependencies (including TypeScript and [wasm-pack](https://rustwasm.github.io/wasm-pack/)) by running `npm install`.
 Finally, you can generate the WebAssembly bindings and compile the TypeScript library by running `npm run build`.
 
-If everything's working correctly, when you run `node lib/index.js`, it will run the JavaScript code and print out the sum of 3 + 5 calculated in WebAssembly (generated from Rust source code), which is 8.
+If everything's working correctly, when you run `node lib/index.js`, it will run the JavaScript code and print out the sum of 3 + 5 calculated in WebAssembly (generated from Rust source code), still fortunately 8.
 
 ## Exposing the Rust crate through WebAssembly bindings
 
 Every WebAssembly module defines a set of exports that can be accessed by the host environment.
-For our purposes, we just want to export a set of functions that our TypeScript library can call to use to pretty-print diagnostics.
+For our example, we just need to export a single function that will generate a pretty-printed diagnostic.
 
-In Rust, we can do this by exporting an appropriate function with the `pub` keyword and annotating it with the `#[wasm_bindgen]` macro.
-A function is "appropriate" if the parameters and return values are types that Rust compiler knows how to compile into a WebAssembly representation.
+In Rust, we can do this by exporting a function with the `pub` keyword and annotating it with the `#[wasm_bindgen]` macro.
+Since we're using `#[wasm_bindgen]`, we need to make sure the function's parameters and return values have types that Rust compiler knows how to compile into a WebAssembly representation - so no fancy higher-kinded types here.
 A full list of supported types are described [here].
 
 [here]: https://rustwasm.github.io/wasm-bindgen/reference/types.html
 
-The crate I'm using, `annotate-snippets`, has a simple API that expects a set of options for specifying a code snippet and the errors it should be annotated with, and it can produce a Rust `String` as output. Here's what the API of `annotate-snippets` looks like in Rust:
+The crate I'm using, `annotate-snippets`, has a simple API.
+It expects a set of options for specifying a code snippet and its annotations, and it can produce a Rust `String` as output.
+Here's what the using the API in Rust looks like:
 
 ```rust
 let snippet = Snippet {
@@ -283,9 +285,9 @@ let dl = DisplayList::from(snippet);
 println!("{}", dl);
 ```
 
-To expose the API through WebAssembly, I'll write a function named `annotate_snippet` that expects the options of the `Snippet` as parameters (title, footer, slices, and formattiong options), and which returns a `String`.
+To make a WebAssembly binding for this, I'll write a function named `annotate_snippet` that expects the options of the `Snippet` as parameters (title, footer, slices, and formatting options), and returns a `String`.
 
-To model these options, we can use an opague type called `JsValue`, and do some parsing to check the values have the expected structure.
+To model the options, we can use an opague type called `JsValue`, and then do some parsing to check the values have the expected structure.
 
 ```rust
 use wasm_bindgen::prelude::*;
@@ -301,8 +303,8 @@ pub fn annotate_snippet(
 }
 ```
 
-Let's start with parsing the first parameter, `options`, which we expect to be provided as a plain JavaScript object with fields that match `annotate_snippets::FormatOptions`.
-The way we will achieve this is by creating own structs that match the structure of `FormatOptions` that implement the serde `Serialize` and `Deserialize` traits on them.
+Let's start with parsing the first parameter, `options`, which we'll expect to be provided as a plain JavaScript object with fields that match `annotate_snippets::FormatOptions`.
+The way we can achieve this is by creating own structs that match the structure of `FormatOptions` that implement the serde `Serialize` and `Deserialize` traits on them.
 `serde` is a library that lets you automatically perform conversions between Rust structs and serialized formats.
 
 > Note: We need to create our own structs because Rust [does not allow you to implement foreign traits on foreign types](https://rust-lang.github.io/chalk/book/clauses/coherence.html).
@@ -535,7 +537,7 @@ export interface Margin {
   maxLineLen: number;
 }
 
-export function annotate_snippet(
+export function annotateSnippet(
   title: Annotation | undefined,
   footer: Annotation[],
   slices: Slice[],
