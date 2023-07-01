@@ -1,11 +1,11 @@
 ---
-title: Using WebAssembly to turn Rust crates into fast JavaScript libraries
+title: Using WebAssembly to turn Rust crates into fast TypeScript libraries
 ---
 
 Hi there - my name's Chris.
 I'm an avid software engineer that enjoys building things.
 
-In this post, I'll walk through how you can create an [npm] package that re-exports the APIs of a Rust crate for use in JavaScript.
+In this post, I'll walk through how you can create an [npm] package that re-exports the APIs of a Rust crate for use in TypeScript or JavaScript.
 For demonstration I'll use a Apache-2.0 / MIT licensed crate named [annotate-snippets], which provides an API for pretty-printing error diagnostics like the one shown below - though the technique can be applied to any crate.
 
 Here's an example the final library being used, and the formatted diagnostic it prints out:
@@ -148,8 +148,6 @@ This defines our JavaScript package metadata:
 }
 ```
 
-Note that we're actually making a TypeScript library -- a JavaScript library with extra type information so that anyone using our library can have extra documentation and type checking in their IDEs.
-
 ### `tsconfig.json`
 
 This defines our TypeScript configuration:
@@ -235,7 +233,7 @@ First, you'll want to build the Rust project by running `cargo build`.
 Then, install all of the npm dependencies (including TypeScript and [wasm-pack](https://rustwasm.github.io/wasm-pack/)) by running `npm install`.
 Finally, you can generate the WebAssembly bindings and compile the TypeScript library by running `npm run build`.
 
-If everything's working correctly, when you run `node lib/index.js`, it will run the JavaScript code and print out the sum of 3 + 5 calculated in WebAssembly (generated from Rust source code), still fortunately 8.
+If everything's working correctly, when you run `node lib/index.js`, it will run the compiled JavaScript code and print out the sum of 3 + 5 calculated in WebAssembly (generated from Rust source code), still fortunately 8.
 
 ## Exposing the Rust crate through WebAssembly bindings
 
