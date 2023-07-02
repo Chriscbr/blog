@@ -553,6 +553,6 @@ Run `npm run build` again to check everything works.
 
 That's it! We've successfully wrapped a Rust crate in WebAssembly and TypeScript.
 
-You can see the full source code of the library on GitHub here (https://github.com/Chriscbr/annotate-snippets).
+You can see the full source code of the library on GitHub here: <https://github.com/Chriscbr/annotate-snippets>.
 
 If you have any questions or comments, feel free to reach out to me on [Twitter](https://twitter.com/rybickic) or [GitHub](https://github.com/Chriscbr).
