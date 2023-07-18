@@ -10,8 +10,11 @@ With its two-phased execution model, its design encourages developers to think h
 It's a language that has its roots in the pains of writing applications to run on cloud providers like AWS, and draws inspiration from both academic research and real-world industry practices.
 
 In this blog post, I wanted to try and identify what I think are most salient features of Winglang from a language design standpoint.
-I won't be able to provide a comprehensive overview of the language or all of the pains it's aiming to solve, but rather to highlight some of the design choices that I think make Winglang unique.
-If you'd like more of a background on how Winglang came to be, I recommend checking out [this blog post](https://www.winglang.io/blog/2022/11/23/manifesto) by Wing's progenitor [Elad Ben-Israel](https://twitter.com/emeshbi).
+
+A comprehensive overview of the language would be too long to fit here, but
+if you'd like more of a background on how Winglang came to be, I recommend checking out [this blog post](https://www.winglang.io/blog/2022/11/23/manifesto) by Wing's progenitor [Elad Ben-Israel](https://twitter.com/emeshbi).
+
+Enough blabber - let's get into it.
 
 ## Two-phased execution model
 
