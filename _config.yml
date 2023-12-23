@@ -3,6 +3,11 @@ author: "Chris Rybicki"
 
 theme: minima
 
+plugins:
+  - jekyll-remote-theme # to allow having minima v3
+
+remote_theme: jekyll/minima # to allow having minima v3
+
 repository: Chriscbr/blog
 
 minima:
