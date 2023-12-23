@@ -3,15 +3,9 @@ author: "Chris Rybicki"
 
 theme: minima
 
-plugins:
-  - jekyll-remote-theme # to allow having minima v3
-
-remote_theme: jekyll/minima # to allow having minima v3
-
 repository: Chriscbr/blog
 
-minima:
-  social_links:
-  - { platform: github, user_url: "https://github.com/Chriscbr" }
-  - { platform: linkedin, user_url: "https://www.linkedin.com/in/christopher-rybicki/" }
-  - { platform: twitter, user_url: "https://twitter.com/rybickic" }
+twitter_username: rybickic
+github_username:  Chriscbr
+linkedin_username: christopher-rybicki
+rss: rss
