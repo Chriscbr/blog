@@ -18,3 +18,7 @@
   width: -webkit-calc(40% - (#{$spacing-unit} / 2));
   width:         calc(40% - (#{$spacing-unit} / 2));
 }
+
+hr {
+  margin: 3em 0;
+}

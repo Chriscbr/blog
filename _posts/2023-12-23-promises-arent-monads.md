@@ -170,7 +170,7 @@ I've tried to present them in a simplified form here, but they're still a bit of
 
 We could try and prove these laws rigorously, but bear in mind we're working with JavaScript, a runtime known for oddities like `[] + []` producing `""`, and `0 == false`.[^2]
 
-[^2]: See https://www.destroyallsoftware.com/talks/wat and https://github.com/denysdovhan/wtfjs
+[^2]: See <https://www.destroyallsoftware.com/talks/wat> and <https://github.com/denysdovhan/wtfjs>
 
 Perhaps we can first build some understanding by validating examples of these laws with the `Array` monad. Let's start with the **left identity**:
 
@@ -278,7 +278,7 @@ It looks like in the in the second expression, the nested promise value got impl
 It turns out this a part of the [promise specification](https://promisesaplus.com/) in JavaScript.
 MDN explains that both `Promise.resolve` and `Promise.then` "[flatten] nested layers of promise-like objects (e.g. a promise that fulfills to a promise that fulfills to something) into a single layer — a promise that fulfills to a non-thenable value."[^3]
 
-[^3]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve
+[^3]: <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve>
 
 The reason for this might not be obvious until you look at some application code.
 [ExploringJS](https://exploringjs.com/deep-js/ch_implementing-promises.html) gives an example illustrating how if a function returns a returns a promise, like `asyncFunction2` in line (A) below:
@@ -324,7 +324,7 @@ Anyways - I hope that was a fun ride through monad properties and JavaScript pro
 I didn't get around to analyzing the other monad laws with promises, but if you take a look you be able to find similar holes in the right identity and associative laws caused by promise flattening.
 
 Shout out to these articles that also do a nice job covering the subtle nature of JavaScript promises:
-- https://www.siawyoung.com/promises-are-almost-monads/
-- https://buzzdecafe.github.io/2018/04/10/no-promises-are-not-monads
+- <https://www.siawyoung.com/promises-are-almost-monads/>
+- <https://buzzdecafe.github.io/2018/04/10/no-promises-are-not-monads>
 
 While it's a bummer that JavaScript promises aren't real monads, they're "fulfilling" their purpose in the ecosystem fairly well, so I wouldn't "reject" them just yet. :-)
