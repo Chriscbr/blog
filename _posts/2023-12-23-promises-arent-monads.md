@@ -2,7 +2,7 @@
 title: Why JavaScript promises aren't technically monads
 ---
 
-While I was chomping down on my lunch the other day, I was doing some web browsing when I stumbled on [this tweet](https://twitter.com/paul_snively/status/1735225290689851556).
+While I was chomping down on my lunch the other day, I was web browsing when I stumbled on [this tweet](https://twitter.com/paul_snively/status/1735225290689851556).
 
 > *@paul_snively*
 >
