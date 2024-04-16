@@ -111,7 +111,7 @@ fn main() -> ! {
 
 There's a good chunk of boilerplate here, but for educational purposes it's interesting to understand what each line is doing to contribute to the overall program since many parts of it will be common to a lot of embedded Rust code.
 
-### `no_std`
+### no_std
 
 Let's start with the first line:
 
@@ -141,7 +141,7 @@ This means if your program doesn't need to dynamically allocate any memory (comm
 >
 > Fortunately, many crates in the Rust ecosystem work with `no_std` either out-of-the-box or through dedicated [crate features](https://doc.rust-lang.org/cargo/reference/features.html), so it seems like this style of programming is decently well supported.
 
-### `no_main`
+### no_main
 
 Moving on. The next line is:
 
