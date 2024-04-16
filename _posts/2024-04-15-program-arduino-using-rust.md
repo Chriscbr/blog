@@ -185,6 +185,7 @@ fn __avr_device_rt_main() -> ! {
 ```
 
 If we squint our eyes a bit we can see the function is rewritten to another name, and an [extern function](https://doc.rust-lang.org/std/keyword.extern.html) is created, presumably so that another program can run or link to our code.
+(If you know more about how this works, I'd be more than curious to know.)
 
 ### Panic handler
 
