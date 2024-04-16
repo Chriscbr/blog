@@ -79,7 +79,7 @@ Congrats - if your starter code was the same as mine, then your device should no
 
 <img src="/blog/assets/images/arduino.jpg" width="500">
 <br>
-*External LED optional.*
+<i>External LED optional.</i>
 
 </center>
 
