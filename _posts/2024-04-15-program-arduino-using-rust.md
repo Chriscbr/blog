@@ -2,22 +2,22 @@
 title: How to program an Arduino using Rust (on macOS)
 ---
 
-I have a confession to make -- in all honesty, I wasn't much of a hardware hacker for most of my life.
-In my teens, whenever I got home from school, I gravitated more often to coding (or video games) than wiring and soldering things in a garage or at a robotics club.
+I have a confession to make -- in all honesty, I'm not much of a hardware hacker.
+In my teens, whenever I got home from school, I gravitated more often to coding (or video games) than soldering or robotics.
 
 But I spent a lot of my childhood playing with [Snap Circuits](https://en.wikipedia.org/wiki/Snap_Circuits) and [redstone circuits](https://www.minecraft101.net/redstone/redstone-basics.html) in Minecraft, so I can appreciate the charm.
-You're building.
+You're automating things - taking small atoms and combining them into something bigger.
 Just like code can be written to do whatever you want, so can hardware -- and there's something more visceral to it since your creations takes up space in the real world.
 I dig that.
 
-In an effort to challenge myself (and have a bit of fun), I recently picked up an [Arduino](https://en.wikipedia.org/wiki/Arduino_Uno), and it's sparked a lot of the joy I had when I first had building with LEGOs as a kid or programming as a teen.
-Once I got my board working, it felt natural that as my first task, I'd write a program for it in Rust, since Rust is a [pretty hot language for embedded systems programming](https://hn.algolia.com/?dateRange=all&page=0&prefix=true&query=rust%20embedded&sort=byPopularity&type=story) these days.
+In an effort to challenge myself (and have a bit of fun), I recently picked up an [Arduino](https://en.wikipedia.org/wiki/Arduino_Uno), and it's sparked a lot of the same joy I had when I first started building with LEGOs as a kid or programming as a teen.
+The Arduino is pretty accessible to newbies - so once I got my board working, it felt natural that as my first task, I'd write a program for it in Rust, since Rust is a [pretty hot language for embedded systems programming](https://hn.algolia.com/?dateRange=all&page=0&prefix=true&query=rust%20embedded&sort=byPopularity&type=story) these days.
 
-The process for getting this working isn't _too_ complicated, but there's some special setup required and a few gotchas along the way to get it working on macOS, so I thought I'd take some notes and share my learning process seeing how Rust works for writing these kinds of programs.
+The process for getting this working hasn't been _too_ complicated, but there's some setup required to get it working on macOS, so I thought I'd take some notes and share my learning process in case it helps anyone else.
 
 Onwards!
 
-> Note: This isn't an introduction to Arduino. If it's your first time using one, I recommend following the official tutorials online that will guide you on setting yours up and uploading simple programs using the [Arduino IDE](https://docs.arduino.cc/software/ide-v2/tutorials/getting-started-ide-v2/). Once you feel comfortable with that, feel free to come back here!
+> Note: This isn't an introduction to Arduino. If it's your first time using one, I recommend following the official tutorials that will guide you on setting yours up and uploading simple programs using the [Arduino IDE](https://docs.arduino.cc/software/ide-v2/tutorials/getting-started-ide-v2/). Once you feel comfortable with that, feel free to come back here!
 
 > Note: This also isn't an introduction to Rust. For that, I recommend checking out the [Rust book](https://doc.rust-lang.org/book/).
 
@@ -73,9 +73,18 @@ You'll be prompted to answer a few questions, and then it'll create a project fo
 Once you've opened it, all you should need to do is `cargo run` to build and flash the application to your board.
 `ravedude` automatically figures out the serial port your device is connected to which is pretty convenient.
 
-Congrats - your device should now be blinking:
+Congrats - if your starter code was the same as mine, then your device should now be blinking:
 
-(picture of my arduino)
+<figure class="image">
+  <img src="/assets/images/arduino.jpg" alt="Arduino UNO board">
+  <figcaption>External LED optional.</figcaption>
+</figure>
+
+<!-- ![Arduino UNO board](/assets/images/arduino.jpg)
+*External LED optional.* -->
+<!-- <center><i>External LED optional.</i></center> -->
+
+At this point, we can probably say we're done - but we haven't really peaked at the Rust code, so the rest of the post will go into some more depth about what's happening in the starter program.
 
 ## Understanding the code
 
