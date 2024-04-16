@@ -75,13 +75,13 @@ Once you've opened it, all you should need to do is `cargo run` to build and fla
 
 Congrats - if your starter code was the same as mine, then your device should now be blinking:
 
-<figure class="image">
-  <img src="/blog/assets/images/arduino.jpg" alt="Arduino UNO board">
-  <figcaption>External LED optional.</figcaption>
-</figure>
+<center>
 
-![Arduino UNO board](/blog/assets/images/arduino.jpg)
+<img src="/blog/assets/images/arduino.jpg" width="500">
+<br>
 *External LED optional.*
+
+</center>
 
 At this point, we can probably say we're done - but we haven't really peaked at the Rust code, so the rest of the post will go into some more depth about what's happening in the starter program.
 
