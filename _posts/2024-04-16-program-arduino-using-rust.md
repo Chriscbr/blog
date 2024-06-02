@@ -77,7 +77,7 @@ Congrats - if your starter code was the same as mine, then your device should no
 
 <center>
 
-<img src="/blog/assets/images/arduino.jpg" width="500">
+<img alt="Photo of an Arduino with a breadboard next to it with a lit-up LED." src="/blog/assets/images/arduino.jpg" width="500">
 <br>
 <i>External LED optional.</i>
 
