@@ -2,17 +2,19 @@
 title: "Exploring biphasic programming: a new approach in language design"
 ---
 
-I've noticed a small but interesting trend in the programming languages space. I'm not sure how novel it is, but this pattern, which I'll refer to as "biphasic programming," is characterized by languages and frameworks that enable identical syntax to express computations executed in two distinct phases or environments while maintaining consistent behavior (i.e., semantics) across phases. These phases typically differ temporally (when they run), spatially (where they run), or both.
+I've noticed a small but interesting trend in the programming languages space. I'm not sure how novel it is, but this pattern, which I'll refer to as "biphasic programming," is characterized by languages and frameworks that enable identical syntax to express computations executed in two distinct phases or environments while maintaining consistent behavior (i.e., semantics) across phases. These phases typically differ temporally (when they run), spatially (where they run), or both.[^1]
 
-"Biphasic programming" is a term I've coined, but I feel like it helps capture the essence of several languages. What's interesting is how it can be applied to different types of problems. To illustrate the concept, I'll go through a few examples.
+"Biphasic programming" is a term I've coined, but I feel like it helps capture the essence of several languages. What's interesting to me is how it can be applied to different types of problems. To illustrate the concept, I'll go through a few examples.
+
+[^1]: One can say that metaprogramming systems are related to biphasic programming. For example, C pre-processing can be thought of as biphasic programming in spirit since it allows you to run code in the pre-processor, a phase of compilation before runtime. But it doesn't satisfy the definition I've provided since the preprocessor only does textual substitutions, and C's preprocessor macros are limited -- #ifdef is quite different from a bona fide if statement. Lisp-style hygenic macros like those in Scheme and Racket, on the other hand, are expressed through functions that support the same expressiveness as the base language(s), so I think it would be fair to say Lisps provide some of the oldest examples of biphasic programming.
 
 ## Zig
 
 The first example is Zig. [Zig](https://ziglang.org/) is a systems programming language that lets you write highly performant code with relatively easy incremental adoption into C/C++ codebases. One of its main innovations is a fresh approach to metaprogramming called "comptime" which allows you to run ordinary functions at compile time.
 
-What makes comptime unique compared to preprocessing systems and macro systems like those in C, C++, and Rust is that it gives you the same [^1] expressivity of the base language through the "comptime" keyword, instead of introducing an entirely separate domain-specific language that only advanced users might want to learn. Here's a (silly) example from their docs:
+What makes comptime unique compared to preprocessing systems and macro systems like those in C, C++, and Rust is that it gives you the same [^2] expressivity of the base language through the "comptime" keyword, instead of introducing an entirely separate domain-specific language that only advanced users might want to learn. Here's a (silly) example from their docs:
 
-[^1]: According to the [Zig docs](https://ziglang.org/documentation/master/#comptime), comptime expressions are limited in some ways -- for example, they can't call external functions, include `return` or `try` expressions, or perform side effects. However, a large fraction of the language is available, and the included example shows that comptime functions don't need to be explicitly labeled as such, which helps make the feature feel more ordinary.
+[^2]: According to the [Zig docs](https://ziglang.org/documentation/master/#comptime), comptime expressions are limited in some ways -- for example, they can't call external functions, include `return` or `try` expressions, or perform side effects. However, a large fraction of the language is available, and the included example shows that comptime functions don't need to be explicitly labeled as such, which helps make the feature feel more ordinary.
 
 ```zig
 const expect = @import("std").testing.expect;
@@ -62,9 +64,9 @@ The gist behind Winglang is that thanks to the availability of vast amounts of c
 
 In principle, it shouldn't be hard build complex applications with these resources. But if your application large enough and has many resources, it can become error-prone explicitly wiring up every single serverless function or container service with the permissions and configuration of its required resources. It's also difficult to design custom interfaces around these resources.
 
-Winglang aims to let you write libraries and applications that compose both infrastructure resources and application logic together, through what the language calls preflight and inflight code. Here's an example program to demonstrate:[^2]
+Winglang aims to let you write libraries and applications that compose both infrastructure resources and application logic together, through what the language calls preflight and inflight code. Here's an example program to demonstrate:[^3]
 
-[^2]: To simplify the example, I'm using some APIs that don't exist in Winglang today -- for example, if you want to use S3, Winglang instead provides a `cloud` module with classes that can compile to either AWS or other clouds. But I don't want to complicate the example with the whole dependency injection idea so let's just pretend there's an `s3` module.
+[^3]: To simplify the example, I'm using some APIs that don't exist in Winglang today -- for example, if you want to use S3, Winglang instead provides a `cloud` module with classes that can compile to either AWS or other clouds. But I don't want to complicate the example with the whole dependency injection idea so let's just pretend there's an `s3` module.
 
 ```js
 // Import some libraries.
@@ -124,9 +126,9 @@ fn.expose();
 
 At the top-level scope of the program, all code is preflight. Among other things, we can define classes, instantiate resources, and call preflight functions (like `onTick()` and `expose()`) to augment and create infrastructure. These statements are executed at compile time. But wherever the `inflight` keyword is used, we're introducing a scope for code that can only run once the application is deployed to the cloud. `get()`, `set()`, and `reset()` are all inflight functions.
 
-The Winglang compiler enforces several phase-related invariants. For example, inflight functions can reference data from preflight, but they can't call preflight functions, since doing so could modify your graph of resources. Likewise, preflight functions can't run inflight functions, but they can convert inflight functions into bundled JavaScript. (Yes, Winglang relies on JavaScript as its underlying runtime).[^3] But despite these rules, preflight code and inflight code are otherwise grounded in the same syntax. Both provide access to the same language facilities like variables, for loops, structs, strings, arrays, classes, and so on.
+The Winglang compiler enforces several phase-related invariants. For example, inflight functions can reference data from preflight, but they can't call preflight functions, since doing so could modify your graph of resources. Likewise, preflight functions can't run inflight functions, but they can convert inflight functions into bundled JavaScript. (Yes, Winglang relies on JavaScript as its underlying runtime).[^4] But despite these rules, preflight code and inflight code are otherwise grounded in the same syntax. Both provide access to the same language facilities like variables, for loops, structs, strings, arrays, classes, and so on.
 
-[^3]: JavaScript ain't the fastest language, but it's reliable and has a broad ecosystem. We're interested in supporting other languages for inflight as well in the future.
+[^4]: JavaScript ain't the fastest language, but it's reliable and has a broad ecosystem. We're interested in supporting other languages for inflight as well in the future.
 
 It's possible to draw parallels between Winglang's preflight/inflight distinction and Zig's comptime/runtime distinction. But it's probably no surprise that since the languages have been built around different use cases, they've ended up with pretty different designs. For example, Zig's comptime aims to avoid all potential side effects, while Winglang's preflight encourages side effects so you can mutate your infrastructure graph.
 
