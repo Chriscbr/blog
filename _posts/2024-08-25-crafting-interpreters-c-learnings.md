@@ -29,10 +29,9 @@ Some of these were explained in the book, while others were the result of my own
 - C supports functions with variable arguments; just the way you do it is a little bit weird. (You have to create a local variable of type `va_list`, then call some functions named `va_start` and `va_end`, and then do some other stuff).
 - There are many different kinds of "NaN" representations possible in the way C and other languages model floating point numbers. "IEEE 754 divides \[NaNs] into two categories. Values where the highest mantissa bit is 0 are called signalling NaNs, and the others are quiet NaNs."
 
-A lot of these notes I took a month ago so unfortunately I don't have the sources for all of them saved - please do your own due diligence if you plan to use these features of C.
+A lot of these notes I took a month ago so unfortunately I don't have the sources for all of them saved; please do your own due diligence if you plan to use these features of C.
 
 One more observation.
-Throughout the second half of the book, there were comments making a distinction between whether a pointer in a struct was "owning" a piece of data (i.e. if it's responsible for deallocating the memory it points to when it's done), or whether it was simply holding a reference that is actually owned by a struct elsewhere.
+Throughout the second half of the book, there were comments making a distinction between whether a pointer in a struct was "owning" a piece of data (i.e. if it's responsible for deallocating the memory it points to), or whether it was simply holding a reference that is actually owned by a struct elsewhere.
 In Rust, this information would be made explicit: an owned pointer to a type `T` is `Box<T>`, while an unowned pointer to a type `T` would be `&T` or `&mut T`.
-
-These comments in the book were illuminating to me since I felt like having to mentally track this ownership information while working with the C code gave me empathy for how Rust aims to solve some of these problems.
+I thought these comments were illuminating to me since the exercise of having to mentally track this ownership information amongst many data structures in the C code gave me empathy for how Rust tries to solve some of these problems.
