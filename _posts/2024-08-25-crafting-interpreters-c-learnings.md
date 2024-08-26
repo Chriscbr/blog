@@ -32,6 +32,6 @@ Some of these were explained in the book, while others were the result of my own
 A lot of these notes I took a month ago so unfortunately I don't have the sources for all of them saved; please do your own due diligence if you plan to use these features of C.
 
 One more observation.
-Throughout the second half of the book, there were comments making a distinction between whether a pointer in a struct was "owning" a piece of data (i.e. if it's responsible for deallocating the memory it points to), or whether it was simply holding a reference that is actually owned by a struct elsewhere.
+Throughout the second half of the book, there are several comments making a distinction between whether a pointer in a struct was "owning" a piece of data (i.e. if it's responsible for deallocating the memory it points to), or whether it was simply holding a reference that is actually owned by a struct elsewhere.
 In Rust, this information would be made explicit: an owned pointer to a type `T` is `Box<T>`, while an unowned pointer to a type `T` would be `&T` or `&mut T`.
-I thought these comments were illuminating to me since the exercise of having to mentally track this ownership information amongst many data structures in the C code gave me empathy for how Rust tries to solve some of these problems.
+I thought these comments were illuminating to me since the exercise of having to mentally track this ownership information amongst many data structures in the C code gave me empathy for the kinds of bugs that can happen, and how Rust tries to solve some of these problems.
