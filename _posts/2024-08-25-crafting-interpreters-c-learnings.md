@@ -11,8 +11,12 @@ Parsing, data flow analysis, type checking, code generation, code optimization -
 Crafting Interpreters offers an excellent middle ground that spends time introducing many of the key ideas and algorithms, while keeping it grounded to keep the focus on the implementation of building a real interpreter.
 The code in the book is fairly clean, and the author even opines at some points on good software development practices.
 Likewise, the language implemented in the book, "Lox", is incredibly pragmatic in its design (it's similar to Python or Java), reflecting the design choices that people expect from some of the most common general purpose languages.
+There's an awesome ecosystem of folks that have written and shared their own Lox implementations [here](https://github.com/munificent/craftinginterpreters/wiki/Lox-implementations) if you're interested to dive deeper.
 
-Anyways, that's enough praise about the book for now.
+My only gripe is that the book's explanations of compiler internals could have benefited from a lot more diagrams and pictures.
+(The book has some, but they tend to be a bit far and few between).
+
+Anyways, that's enough about the book for now.
 While my main goal reading the book was to learn about compilers, by copying every line of the book by hand into my editor, I ended up learning quite a bit about C that I don't think I had known before, so I thought I'd share some of these takeaways.
 Some of these were explained in the book, while others were the result of my own Googling.
 
