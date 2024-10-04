@@ -52,7 +52,7 @@ It is also designed to make it more productive for building and maintaining clou
 My time spent working on the language at [Wing Cloud](https://wing.cloud/) has involved both lots of testing (building applications with it), and lots of time designing and implementing features to support these technical requirements.
 In this post, I wanted to try and explore some of the technical challenges, and explore what I think are some of the biggest unsolved problems in the compiler to date.
 
-> Disclaimer: The design of Winglang has been a joint effort by many people. All of the opinions I'll be sharing are just based on one way I'd imagine the language growing.
+> Disclaimer: The design of Winglang has been a joint effort by many really cool people. All of the opinions I'll be sharing are just based on one way I'd imagine the language growing.
 
 ## Generics
 
