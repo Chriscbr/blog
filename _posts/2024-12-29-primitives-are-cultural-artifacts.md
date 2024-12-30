@@ -3,14 +3,14 @@ title: "Primitives are cultural artifacts"
 ---
 
 One of my interests in programming is making software for other software engineers.
-Because of this, a concept that's on my mind a lot is the idea of the "primitive".
+Software requires building up big things from lots of little things, so a concept that's on my mind a lot is the idea of the "primitive".
 The word primitive comes from the Latin *prīmitīvus*, which means "first or earliest of its kind."
 But the definition I like to use is that a primitive is a building block.
 Like LEGOs, primitives are pieces designed to be combined together in order to form larger structures.
 
 Because the word "primitive" has an academic, highfalutin sound to it, I think folks working on software like using the term more than other professionals, but the idea extends beyond software.
 Take chemistry, for example.
-The periodic table contains all of the elements that make up matter in the universe: elements are the primitives of *matter*.[^1]
+The periodic table contains all of the elements that make up matter in the universe: chemical elements are the primitives of *matter*.[^1]
 Or take cooking: inside a kitchen, a chef stores all of the ingredients they need, from salt and pepper to flour and sugar and beyond.
 All dishes are made of one or more ingredients, composed together by cooking or mixing them one way or another: ingredients are the primitives of *cooking*.
 
