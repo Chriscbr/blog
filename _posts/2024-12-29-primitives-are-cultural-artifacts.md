@@ -2,6 +2,13 @@
 title: "Primitives are cultural artifacts"
 ---
 
+<center>
+
+<img src="/blog/assets/images/building-blocks.png" width="450">
+
+</center>
+<br>
+
 One of my interests in programming is making software for other software engineers.
 Software development requires building up big things from lots of little things, so a concept that's on my mind a lot is the idea of the "primitive".
 The word primitive comes from the Latin *prīmitīvus*, which means "first or earliest of its kind."
