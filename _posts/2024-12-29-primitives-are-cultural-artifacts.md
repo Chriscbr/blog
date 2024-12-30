@@ -74,7 +74,7 @@ For example, both Turing machines and lambda calculus are complete systems for d
 The ideal set of primitives for a chef making restaurant meals can be different from the set of primitives of a parent making school lunches for their kids. Likewise, the set of ideal primitives for programmers working on backend software, mobile apps, websites, and games can all be different.
 All sets of primitives are shaped by the technology that's available and the needs of the people using them.
 
-Designing a set of primitives without a specific area of focus is unproductive because there's no single person who the set of primitives would benefit the most.
+Designing a set of primitives without a specific area of focus is unproductive because primitives that try to appeal to everyone tend to be the best for no one.
 
 ---
 
