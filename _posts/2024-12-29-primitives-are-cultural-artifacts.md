@@ -3,7 +3,7 @@ title: "Primitives are cultural artifacts"
 ---
 
 One of my interests in programming is making software for other software engineers.
-Software requires building up big things from lots of little things, so a concept that's on my mind a lot is the idea of the "primitive".
+Software development requires building up big things from lots of little things, so a concept that's on my mind a lot is the idea of the "primitive".
 The word primitive comes from the Latin *prīmitīvus*, which means "first or earliest of its kind."
 But the definition I like to use is that a primitive is a building block.
 Like LEGOs, primitives are pieces designed to be combined together in order to form larger structures.
