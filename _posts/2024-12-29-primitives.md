@@ -1,5 +1,5 @@
 ---
-title: "Primitives are cultural artifacts"
+title: "Primitives are tools, not truths"
 ---
 
 <center>
@@ -25,7 +25,7 @@ Here's an open question.
 For a given domain (like cooking, chemistry, or programming), is there an optimal set of primitives?
 Is there a "correct" or "best" set of primitives?
 
-## Picking the best primitives
+## Finding the best primitives
 
 If we just look to the chemistry example, it seems like the answer to our previous question should be yes.
 We know there's a fixed set of elements in the periodic table -- there can't be elements with seven and a half protons.[^2]
@@ -55,33 +55,36 @@ That raises the question...
 
 Here are some aspects shared by great primitives in both cooking and programming:
 
-* **The primitives are flexible and multi-purpose.**
+* **They're flexible and multi-purpose.**
     * An ingredient like milk can be used as a liquid base for drinks, it can be turned into a béchamel, it can be added to soups for creaminess, it can be frozen for ice creams, etc.
     * A software primitive like an array can be used for sorting records in a dataset, or for buffering requests in memory, or for storing pixel data for an image, etc.
-* **The primitives don't introduce a lot of waste.**
+* **They don't introduce a lot of waste.**
     * When you use milk as an ingredient, you might toss or recycle its container when it's empty, and that's it. Likewise when you use a fruit as an ingredient, usually everything but the peel can be used.
     * When you use an array in programming, there may be some extra information stored alongside it (like the size of the array), but the overhead beyond the array's contents is minimal. An array is also performant - it always guarantees constant-time random access.
-* **The primitives aren't complete, pre-made artifacts.**
+* **They aren't complete, pre-made artifacts.**
     * A frozen dinner can be ok to eat, but it's not a useful primitive for a chef for creating new dishes.
     * Similarly, a Wordpress website can be ok for hosting your blog, but it's not a useful primitive for a programmer for solving many other problems.
-* **The primitives are accessible.**
+* **They're accessible.**
     * Most cooking ingredients can be readily used and combined. Sometimes they require thawing or peeling, but that's it. If an ingredient is hard to prepare, it's probably not needed for most dishes.[^3]
     * Most programming languages make their primitives built-in, meaning you just have to type one or two keywords to invoke them. Primitives also are documented to make them easier to adopt.
-* **The primitives are not substitutable for each another.**
-    * When any ingredient is replaced in a recipe, there's always a tradeoff because of its different chemical properties and flavor profile. Whole milk, heavy cream, and oat milk can all be used in coffee, but they will taste different. It makes more sense to keep different kinds of dairy products in a kitchen than to keep different brands of whole milk.
-    * Primitives like numbers and lists can be represented all kinds of ways on a computer, but they typically have different memory representations which may incur different storage or performance costs. When software primitives aren't distinctive enough, it becomes [hard to distinguish between them](https://x.com/forrestbrazeal/status/1400639759215640577).
+* **They're distinctive.**
+    * Every ingredient is unique. When an ingredient in a recipe is replaced, there's always a tradeoff because of its different chemical properties and flavor profile. Whole milk, heavy cream, and oat milk can all be used in coffee, but they will taste different. It makes more sense to keep different kinds of dairy products in a kitchen than to keep different brands of whole milk.
+    * Programming primitives like numbers and lists can be represented all kinds of ways on a computer, but they typically have different memory representations which may incur different storage or performance costs. When software primitives aren't distinctive enough, it becomes [hard to distinguish between them](https://x.com/forrestbrazeal/status/1400639759215640577).
 
 ## TL;DR
 
-Ultimately, a set of primitives isn't an a mathematical ideal. Every set of primitives is shaped by what problems its users are solving.
+Ultimately, a set of primitives isn't an a mathematical ideal.
+Every set of primitives is shaped by what the people using them are building.
 
-Even when we think of primitives from an maths perspective, like as a set of axioms that define a complete system, we tend to find that there are multiple ways to define a system.
-For example, both Turing machines and lambda calculus are complete systems for defining computation[^4], but they're different.
+Even when we consider primitives in math, like the axioms that define abstract objects and systems, we tend to find that there are usually multiple ways to define them.
+For example, both the [turing machines](https://en.wikipedia.org/wiki/Turing_machine) and the [lambda calculus](https://en.wikipedia.org/wiki/Lambda_calculus) are complete systems for defining computation[^4], but neither is strictly better than the other.
 
-The ideal set of primitives for a chef making restaurant meals can be different from the set of primitives of a parent making school lunches for their kids. Likewise, the set of ideal primitives for programmers working on backend software, mobile apps, websites, and games can all be different.
-All sets of primitives are shaped by the technology that's available and the needs of the people using them.
-
+All sets of primitives are shaped by the technology and ideas that are available, and the needs of the people using them.
+The ideal set of primitives for a chef making restaurant meals can be different from the set of primitives of a parent making school lunches for their kids.
+The best set of primitives for a programmer depends on whether they're working on backend software, mobile apps, websites, or games.
 Designing a set of primitives without a specific area of focus is unproductive because primitives that try to appeal to everyone tend to be the best for no one.
+
+Primitives are tools, not truths.
 
 ---
 
