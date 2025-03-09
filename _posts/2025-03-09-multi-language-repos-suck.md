@@ -17,27 +17,32 @@ Take CRUD apps: they often use JavaScript for the frontend (browsers demand it) 
 When data can only flow through a few well-defined endpoints using JSON, friction stays low.
 Moreover, the separation of concerns is strong enough that you can specialize in one half of the stack without needing deep knowledge of the other half.
 
-But when languages interact through complex interfaces, you tend to need deep knowledge of both codebases just to make simple changes.
-For example, once FFI is involved, you need to be aware of how types are laid out in memory and how each language manages its memory.
+But when languages interact through complex interfaces, you tend to need deep knowledge of both parts of the codebase just to make simple changes.
+For example, once [FFI](https://en.wikipedia.org/wiki/Foreign_function_interface) is involved, you need to be aware of how types are laid out in memory and how each language manages its memory.
 In an old enough codebase, business logic might be duplicated or inconsistently implemented across languages.
 You'll also need to master multiple debugging tools and environments.
 In short, this means the project will suck to work on.
 
----
+<br>
+<center><b>·</b></center>
+<br>
 
 Hold on, you say.
 Learning new programming languages isn't really that hard.
 What's the big deal?
 
 There's a surface level truth to this claim.
-Learning your first programming language requires learning a lot of new concepts (variables, for loops, strings, functions, and so on) -- but once you know that one language well, you likely have enough of background to learn a second language much quicker.
+Learning your first programming language requires learning several concepts (variables, for loops, strings, functions...) -- but once you know that one language well, you have enough of background to learn a second language much quicker.
 Your third and fourth languages will be even easier to learn.
 
-However, the bigger the project you're working on, the more knowledge you're going to need about the languages it's written in.
+However, the bigger the project you're working on, the more code it will have, and likely the knowledge you're going to need about the languages it's written in.
 Every language has boundless trivia about standard library features, memory layouts of data structures, and oh so many conventions and idioms.
-If features and bug fixes regularly require code changes in multiple languages, this means more context switching for the developer, which hurts productivity.
+If features and bug fixes regularly require code changes in multiple languages, this means more prerequisite knowledge for the developer.
+This limits how many people can work on the project and how quickly new developers can get up to speed.
 
----
+<br>
+<center><b>·</b></center>
+<br>
 
 If you're thinking about splitting business logic across multiple languages, ask yourself: is it worth the cost?
 
