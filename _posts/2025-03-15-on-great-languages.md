@@ -2,9 +2,7 @@
 title: "On great programming languages"
 ---
 
-A quality shared by great programming languages is that they make you more effective at writing useful code.
-
-To look at it the opposite way, many languages may have interesting ideas motivating them, or have a variety of ways to make you feel more productive -- but I don't think these qualities are what make great programming languages great.
+Many languages may have interesting ideas motivating them, or have a variety of ways to make you feel more productive -- but I don't think these qualities are what make great programming languages great.
 
 For example, a programming language could have much more beautiful, ergonomic syntax.
 Consider how Kotlin makes writing JVM code much more palatable to write.
@@ -28,14 +26,15 @@ But they do not make a language great.
 <center><b>·</b></center>
 <br>
 
-So that was a bit about what *doesn't* make a great programming language - now what *does*?
+So if those qualities don't make great programming languages, then what does?
 
-When I say "a great programming language makes you more effective at writing useful code," I think there's two parts to focus on.
+I think the common quality shared by great programming languages is that they make you more effective at writing useful code.
+This can be broken into two parts.
 
 First, the language's design is catered towards the "useful code" -- which is just my catch-all for code that's providing the most value in a software project.
-This is the code the most unique to your project, which is usually algorithmic, or implementing some kind of domain-related behavior.
-This is code that you probably care the most about how it handles different edge cases, or the performance of it, or the portability of it, or how security it is, etc.
-If this is the most important code in a project, then your programming language needs to help you most with that code (and the qualities of it you're interested in).
+This is the code most unique to your project: it's usually algorithmic, or models some kind of domain-related logic.
+You probably care a lot about how it handles different edge cases, or the performance of it, or the portability of it, or how security it is, etc.
+If this is the most important code in a project, then your programming language should help you most with that code (and the qualities you're interested in).
 
 Secondly, the language helps you at being effective.
 This can take many forms.
@@ -47,13 +46,14 @@ Haskell is another example of a language that shines in its expressivity, showin
 Low level languages like Zig offer a great deal of ways to partition data in memory, and often discourage unilateral implementations of common data structures (like strings or vectors), instead encouraging you to design and fine tune your implementation so that you can get the maximum possible performance for your particular application. 
 * It could also mean helping you recognize logical errors that could otherwise have cost you days or weeks of debugging.
 For example, Rust's borrow checking system is uniquely well posed to identifying memory bugs.
+Likewise, TypeScript's expansive type system lets teams do cross-codebase refactors of JavaScript code with a lot more confidence than without it.
 
 I think a natural side effect of these factors is that when you begin learning a great programming language, and reading code in that language, you learn and grow more than you expect.
 You're not simply memorizing commands - you start discovering how different ingredients can be combined in new and more effective ways.
 You discover how having certain grammatical patterns or phrases in your vocabulary not only allows you to express ideas more concisely, but also allows you to juggle more ideas in your head at once.
-For lower-level languages, you may find yourself learning more details about how a computer works than what you previously knew, and having more [mechanical empathy](https://martinfowler.com/articles/lmax.html#QueuesAndTheirLackOfMechanicalSympathy).
+For lower-level languages, you may find yourself learning more details about how a computer works than what you previously knew, and acquiring more [mechanical empathy](https://martinfowler.com/articles/lmax.html#QueuesAndTheirLackOfMechanicalSympathy).
 
 As a concrete example of this, I was recently reading through Peter Norvig's essay [Solving Every Sudoku Puzzle](https://norvig.com/sudoku.html), which walks through his design of a sudoku solver in Python.
-There are dozens of essays criticizing the design of Python (and even I'll admit it's not my starting choice for all projects), and those with a traditional computer science education would be unsurprised by Norvig's general solution approach of using backtracking search.
+There's no shortage of criticisms of Python online (and even I'll admit it's not my starting choice for all projects), and those with a traditional computer science education would be unsurprised by Norvig's general solution approach of using backtracking search.
 But the way the code is expressed feels uniquely inventive as someone that hasn't written Python in a while.
 And I think the essay illustrated to me that for Norvig, Python *is* a great language because it allowed him to be incredibly effective at solving a particular kind of problem.
