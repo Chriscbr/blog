@@ -42,13 +42,14 @@ In the remainder of this post, I'll share some of my own thoughts from my experi
 ## Objects vs relationships
 
 One of the things you begin to realize after attempting a lot of these puzzles is that what you think defines a "rule" or "pattern" can be pretty biased.
+When you're trying out rules, you're trying to abstract the differences of the left images from the right images.
 You might start by trying to see if images on the left have more triangles, or if they're more symmetrical, or things like that.
 But after ruling out different hypotheses, it might turn out that the rule is the shapes on the left touch the border and the ones on the right don't.
 Or the shapes on the left are enclosed and the ones on the right aren't.
 
 These aren't observations about the actual _objects_, but rather about the _relationships between them_, or the _frame in which they live_.
 
-To me this suggests that the very idea of _abstraction_, the tool we're using to unify the differences between the left and right images, isn't necessarily hierarchical, but rather perspective-oriented.
+To me this suggests that the very idea of _abstraction_ isn't necessarily hierarchical, but rather perspective-oriented.
 We're used to thinking of levels of abstraction like _object_ vs _group of objects_ vs _scene_.
 But here, most solutions don't come from decomposing the images into smaller pieces, but rather by applying different lenses.
 Or by viewing the data through a different set of basis vectors.
