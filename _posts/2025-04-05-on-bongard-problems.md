@@ -21,7 +21,7 @@ _what is the rule?_
 
 </center>
 
-I'll leave the solution to this problem at the end of this post. (Hint: the rule is a geometric property.)
+I'll leave the solution to this problem at the end of this post. (Hint: the rule is a geometric property that most students are taught around high school.)
 
 I learned about Bongard problems by way of [Gödel, Escher, Bach](https://en.wikipedia.org/wiki/G%C3%B6del,_Escher,_Bach), which traces them back to Mikhail Bongard's book _Pattern Recognition_ (1970).
 
