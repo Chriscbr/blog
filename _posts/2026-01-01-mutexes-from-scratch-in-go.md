@@ -555,7 +555,18 @@ I've distinguished between the different versions of the locks we implemented us
 | FutexLockV2 | 2.58s              | 9.28s          | 6.17s            |
 | FutexLockV3 | 0.69s              | 8.07s          | 1.24s            |
 
-From this we can clearly see that, relative to the previous versions, adaptive spinning helps a *lot* when a lock is under high contention.
+And here are the results graphed with a logarithmic scale:
+
+<center>
+
+<br>
+<img src="/blog/assets/images/lockperf.png">
+<br>
+<br>
+
+</center>
+
+From this we can see that relative to the previous versions, adaptive spinning helps a *lot* when a lock is under frequent swapping.
 By including it, `FutexLock` (v3) is able to stay competitive with the `SpinLock`, which turns out to perform very well in this scenario compared to the built-in `sync.Mutex`!
 
 ## Open questions
