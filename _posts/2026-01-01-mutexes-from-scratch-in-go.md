@@ -122,9 +122,10 @@ The reason is that if two threads running concurrently each call the `Lock()` me
 1. Thread A finishes the for loop
 2. Thread B finishes the for loop
 3. Thread A sets `l.state` to `true`
-4. Thread B sets `l.state` to `false`
+4. Thread B sets `l.state` to `true`
 
-The scenario might sound unlikely, but it's inevitable when a lock is under high contention (trying to be acquired by many threads).
+After these steps, both threads believe they have exclusive ownership over the lock, which is clearly not the case.
+The scenario might sound rare, but it's inevitable when a lock is under high contention (trying to be acquired by many threads).
 How do we fix this?
 
 ## A working spin lock
