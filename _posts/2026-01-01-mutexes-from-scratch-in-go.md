@@ -2,33 +2,6 @@
 title: Writing mutexes from scratch in Go
 ---
 
-<!--
-
-### Motivating concurrency programming
-
-In the world of programming languages, one of the tensions you'll find when you write code designed for increased concurrency is that you need to be more careful with how you handle data.
-
-The classic example of this is when you're building a web server that handles HTTP requests.
-These requests might look up information in a database, perform some calculations, etc.
-Each request can be run as a separate thread (an independently runnable sequence of computer instructions), which may run in parallel on your computer's CPU cores.
-
-This is all fine and well if your requests can all run independently.
-But if the requests need to interact with some shared or global variable(s), dangerous bugs can occur if the variables aren't protected.
-Suppose two threads want to increment a counter.
-Thread A can read the variable, calculate the next value, and store the result in the variable.
-Thread B can do the same.
-If those threads run at the same time, it's possible that the instructions could get interleaved such that if the variable started as `x`, it might store `x+1` at the end instead of `x+2`.
-Now that's a nasty bug!
-
-The situation above is pretty basic: there are only two threads, the shared state was a single number, and both threads were trying to increment it.
-But for more advanced programs, not only are there more threads, but there can also be more complex shared state (like trees or tables), as well as different operations being performed.
-
-It turns out that the scope of this problem is wide enough that entire textbooks are dedicated to it (like [The Art of Multiprocessor Programming](https://www.amazon.com/Art-Multiprocessor-Programming-Maurice-Herlihy/dp/0124159508?sr=8-1)), but for this post, I'm just going to focus on one of the most useful tools for solving these concurrency bugs: locks.
-
-### What is a mutex?
-
--->
-
 Did you know that in programming, threads have been [locking in](https://www.merriam-webster.com/slang/lock-in) before it was cool?
 
 A [mutex](https://en.wikipedia.org/wiki/Lock_(computer_science)) (also known as a lock) is an object used to guarantee that only one thread can run a critical section of code at a time.
