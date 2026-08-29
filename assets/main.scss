@@ -26,3 +26,34 @@ hr {
 pre, code {
   tab-size: 4;
 }
+
+@font-face {
+  font-family: "Broadsheet";
+  src: url("https://db.onlinewebfonts.com/t/703f22557c84d1b7254b13f4d01f66b0.eot");
+  src: url("https://db.onlinewebfonts.com/t/703f22557c84d1b7254b13f4d01f66b0.eot?#iefix")format("embedded-opentype"),
+  url("https://db.onlinewebfonts.com/t/703f22557c84d1b7254b13f4d01f66b0.woff2")format("woff2"),
+  url("https://db.onlinewebfonts.com/t/703f22557c84d1b7254b13f4d01f66b0.woff")format("woff"),
+  url("https://db.onlinewebfonts.com/t/703f22557c84d1b7254b13f4d01f66b0.ttf")format("truetype"),
+  url("https://db.onlinewebfonts.com/t/703f22557c84d1b7254b13f4d01f66b0.svg#Broadsheet")format("svg");
+}
+
+.post-meta {
+  font-size: 100%;
+  line-height: 100%;
+}
+
+blockquote {
+  font-size: 100%;
+  line-height: 100%;
+}
+
+body {
+  font-family: "Broadsheet";
+  font-size: 130%;
+  line-height: 120%;
+}
+
+code {
+  font-family: "Courier";
+  font-weight: 500;
+}
